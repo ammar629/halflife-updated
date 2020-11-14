@@ -617,11 +617,14 @@ void CBarney::Killed( entvars_t *pevAttacker, int iGib )
 		Vector vecGunAngles;
 
 		pev->body = BARNEY_BODY_GUNGONE;
-
+		
 		GetAttachment( 0, vecGunPos, vecGunAngles );
 		
 		CBaseEntity *pGun = DropItem( "weapon_9mmhandgun", vecGunPos, vecGunAngles );
 	}
+
+	
+
 
 	SetUse( NULL );	
 	CTalkMonster::Killed( pevAttacker, iGib );
@@ -837,5 +840,3 @@ void CDeadBarney :: Spawn( )
 
 	MonsterInitDead();
 }
-
-

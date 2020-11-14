@@ -877,9 +877,9 @@ void ClientPrecache( void )
 	PRECACHE_SOUND("debris/glass2.wav");
 	PRECACHE_SOUND("debris/glass3.wav");
 
-	PRECACHE_SOUND( SOUND_FLASHLIGHT_ON );
-	PRECACHE_SOUND( SOUND_FLASHLIGHT_OFF );
-
+	PRECACHE_SOUND( "items/nvg_off.wav" );
+	PRECACHE_SOUND( "items/nvg_on.wav" );
+	
 // player gib sounds
 	PRECACHE_SOUND("common/bodysplat.wav");		               
 
