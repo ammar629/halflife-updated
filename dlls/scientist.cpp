@@ -658,7 +658,19 @@ void CScientist :: Spawn( void )
 {
 	Precache( );
 
-	SET_MODEL(ENT(pev), "models/scientist.mdl");
+	int c_Sci;
+	c_Sci = RANDOM_LONG(0, 1);
+
+	if (c_Sci == 0) {
+		PRECACHE_MODEL("models/scientist.mdl");
+		SET_MODEL(ENT(pev), "models/scientist.mdl");
+		ALERT(at_aiconsole, "It is %d \n", c_Sci);
+	}
+	else {
+		PRECACHE_MODEL("models/scientistHD.mdl");
+		SET_MODEL(ENT(pev), "models/scientistHD.mdl");
+		ALERT(at_aiconsole, "It is %d \n", c_Sci);
+	}
 	UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
 
 	pev->solid			= SOLID_SLIDEBOX;
@@ -695,6 +707,7 @@ void CScientist :: Spawn( void )
 void CScientist :: Precache( void )
 {
 	PRECACHE_MODEL("models/scientist.mdl");
+	PRECACHE_MODEL("models/scientistHD.mdl");
 	PRECACHE_SOUND("scientist/sci_pain1.wav");
 	PRECACHE_SOUND("scientist/sci_pain2.wav");
 	PRECACHE_SOUND("scientist/sci_pain3.wav");
@@ -1127,34 +1140,70 @@ LINK_ENTITY_TO_CLASS( monster_scientist_dead, CDeadScientist );
 //
 void CDeadScientist :: Spawn( )
 {
-	PRECACHE_MODEL("models/scientist.mdl");
-	SET_MODEL(ENT(pev), "models/scientist.mdl");
+	int caseZ = RANDOM_LONG(0, 1);
 	
-	pev->effects		= 0;
-	pev->sequence		= 0;
-	// Corpses have less health
-	pev->health			= 8;//gSkillData.scientistHealth;
-	
-	m_bloodColor = BLOOD_COLOR_RED;
+	switch (caseZ) {
+	case 0:
+		PRECACHE_MODEL("models/scientist.mdl");
+		SET_MODEL(ENT(pev), "models/scientist.mdl");
 
-	if ( pev->body == -1 )
-	{// -1 chooses a random head
-		pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS-1);// pick a head, any head
+		pev->effects = 0;
+		pev->sequence = 0;
+		// Corpses have less health
+		pev->health = 8;//gSkillData.scientistHealth;
+
+		m_bloodColor = BLOOD_COLOR_RED;
+
+		if (pev->body == -1)
+		{// -1 chooses a random head
+			pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS - 1);// pick a head, any head
+		}
+		// Luther is black, make his hands black
+		if (pev->body == HEAD_LUTHER)
+			pev->skin = 1;
+		else
+			pev->skin = 0;
+
+		pev->sequence = LookupSequence(m_szPoses[m_iPose]);
+		if (pev->sequence == -1)
+		{
+			ALERT(at_console, "Dead scientist with bad pose\n");
+		}
+
+		//	pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
+		MonsterInitDead();
+		break;
+	case 1: 
+		PRECACHE_MODEL("models/scientistHD.mdl");
+		SET_MODEL(ENT(pev), "models/scientistHD.mdl");
+
+		pev->effects = 0;
+		pev->sequence = 0;
+		// Corpses have less health
+		pev->health = 8;//gSkillData.scientistHealth;
+
+		m_bloodColor = BLOOD_COLOR_RED;
+
+		if (pev->body == -1)
+		{// -1 chooses a random head
+			pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS - 1);// pick a head, any head
+		}
+		// Luther is black, make his hands black
+		if (pev->body == HEAD_LUTHER)
+			pev->skin = 1;
+		else
+			pev->skin = 0;
+
+		pev->sequence = LookupSequence(m_szPoses[m_iPose]);
+		if (pev->sequence == -1)
+		{
+			ALERT(at_console, "Dead scientist with bad pose\n");
+		}
+
+		//	pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
+		MonsterInitDead();
+		break;
 	}
-	// Luther is black, make his hands black
-	if ( pev->body == HEAD_LUTHER )
-		pev->skin = 1;
-	else
-		pev->skin = 0;
-
-	pev->sequence = LookupSequence( m_szPoses[m_iPose] );
-	if (pev->sequence == -1)
-	{
-		ALERT ( at_console, "Dead scientist with bad pose\n" );
-	}
-
-	//	pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
-	MonsterInitDead();
 }
 
 
@@ -1209,8 +1258,14 @@ SITTING_ANIM_sitting3
 //
 void CSittingScientist :: Spawn( )
 {
-	PRECACHE_MODEL("models/scientist.mdl");
-	SET_MODEL(ENT(pev), "models/scientist.mdl");
+	int c_Sci;
+	c_Sci = RANDOM_LONG(0, 1);
+	
+		PRECACHE_MODEL("models/scientist.mdl");
+		SET_MODEL(ENT(pev), "models/scientist.mdl");
+		ALERT(at_aiconsole, "It is %d \n", c_Sci);
+	
+
 	Precache();
 	InitBoneControllers();
 

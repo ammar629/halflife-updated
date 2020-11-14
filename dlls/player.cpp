@@ -965,6 +965,7 @@ void CBasePlayer::SetAnimation( PLAYER_ANIM playerAnim )
 	{
 	case PLAYER_JUMP:
 		m_IdealActivity = ACT_HOP;
+		ALERT(at_console, "Player Jumped\n");
 		break;
 	
 	case PLAYER_SUPERJUMP:
@@ -3370,7 +3371,7 @@ void CBasePlayer :: FlashlightTurnOn( void )
 
 	if ( (pev->weapons & (1<<WEAPON_SUIT)) )
 	{
-		EMIT_SOUND_DYN( ENT(pev), CHAN_WEAPON, SOUND_FLASHLIGHT_ON, 1.0, ATTN_NORM, 0, PITCH_NORM );
+		EMIT_SOUND_DYN( ENT(pev), CHAN_WEAPON, "items/nvg_on.wav", 1.0, ATTN_NORM, 0, PITCH_NORM );
 		SetBits(pev->effects, EF_DIMLIGHT);
 		MESSAGE_BEGIN( MSG_ONE, gmsgFlashlight, NULL, pev );
 		WRITE_BYTE(1);
@@ -3385,7 +3386,7 @@ void CBasePlayer :: FlashlightTurnOn( void )
 
 void CBasePlayer :: FlashlightTurnOff( void )
 {
-	EMIT_SOUND_DYN( ENT(pev), CHAN_WEAPON, SOUND_FLASHLIGHT_OFF, 1.0, ATTN_NORM, 0, PITCH_NORM );
+	EMIT_SOUND_DYN( ENT(pev), CHAN_WEAPON, "items/nvg_off.wav", 1.0, ATTN_NORM, 0, PITCH_NORM );
     ClearBits(pev->effects, EF_DIMLIGHT);
 	MESSAGE_BEGIN( MSG_ONE, gmsgFlashlight, NULL, pev );
 	WRITE_BYTE(0);
@@ -3560,6 +3561,7 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		GiveNamedItem( "weapon_satchel" );
 		GiveNamedItem( "weapon_snark" );
 		GiveNamedItem( "weapon_hornetgun" );
+		//GiveNamedItem("weapon_supershotgun");
 #endif
 		gEvilImpulse101 = FALSE;
 		break;

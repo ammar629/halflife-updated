@@ -24,7 +24,6 @@
 #include	"monsters.h"
 #include	"schedule.h"
 
-
 //=========================================================
 // Monster's Anim Events Go Here
 //=========================================================
@@ -130,7 +129,10 @@ void CZombie :: SetYawSpeed ( void )
 	{
 	}
 #endif
-
+	//Will it work?
+	if (pev->health > 400) {
+		pev->yaw_speed = ys + 100;
+	}
 	pev->yaw_speed = ys;
 }
 
@@ -190,13 +192,20 @@ void CZombie :: AttackSound( void )
 //=========================================================
 void CZombie :: HandleAnimEvent( MonsterEvent_t *pEvent )
 {
+
 	switch( pEvent->event )
 	{
 		case ZOMBIE_AE_ATTACK_RIGHT:
 		{
 			// do stuff for this event.
 	//		ALERT( at_console, "Slash right!\n" );
-			CBaseEntity *pHurt = CheckTraceHullAttack( 70, gSkillData.zombieDmgOneSlash, DMG_SLASH );
+			CBaseEntity* pHurt = NULL;
+			if (pev->health > 400) {
+				pHurt = CheckTraceHullAttack(70, gSkillData.zombieDmgOneSlash + 600, DMG_SLASH);
+			}
+			else {
+				pHurt = CheckTraceHullAttack(70, gSkillData.zombieDmgOneSlash, DMG_SLASH);
+			}
 			if ( pHurt )
 			{
 				if ( pHurt->pev->flags & (FL_MONSTER|FL_CLIENT) )
@@ -220,7 +229,13 @@ void CZombie :: HandleAnimEvent( MonsterEvent_t *pEvent )
 		{
 			// do stuff for this event.
 	//		ALERT( at_console, "Slash left!\n" );
-			CBaseEntity *pHurt = CheckTraceHullAttack( 70, gSkillData.zombieDmgOneSlash, DMG_SLASH );
+			CBaseEntity* pHurt = NULL;
+			if (pev->health > 400) {
+				pHurt = CheckTraceHullAttack(70, gSkillData.zombieDmgOneSlash + 600, DMG_SLASH);
+			}
+			else {
+				pHurt = CheckTraceHullAttack(70, gSkillData.zombieDmgOneSlash, DMG_SLASH);
+			}
 			if ( pHurt )
 			{
 				if ( pHurt->pev->flags & (FL_MONSTER|FL_CLIENT) )
@@ -242,7 +257,13 @@ void CZombie :: HandleAnimEvent( MonsterEvent_t *pEvent )
 		case ZOMBIE_AE_ATTACK_BOTH:
 		{
 			// do stuff for this event.
-			CBaseEntity *pHurt = CheckTraceHullAttack( 70, gSkillData.zombieDmgBothSlash, DMG_SLASH );
+			CBaseEntity* pHurt = NULL;
+			if (pev->health > 400) {
+				pHurt = CheckTraceHullAttack(70, gSkillData.zombieDmgOneSlash + 600, DMG_SLASH);
+			}
+			else {
+				pHurt = CheckTraceHullAttack(70, gSkillData.zombieDmgOneSlash, DMG_SLASH);
+			}
 			if ( pHurt )
 			{
 				if ( pHurt->pev->flags & (FL_MONSTER|FL_CLIENT) )
@@ -272,20 +293,55 @@ void CZombie :: HandleAnimEvent( MonsterEvent_t *pEvent )
 void CZombie :: Spawn()
 {
 	Precache( );
+	int caseZ;
+	caseZ = RANDOM_LONG(0, 1) & 1 | RANDOM_LONG(0, 1) & 1;
+	ALERT(at_console, "Probability Generator is %d\n", caseZ);
 
-	SET_MODEL(ENT(pev), "models/zombie.mdl");
-	UTIL_SetSize( pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );
+	if (caseZ == 1) {
+		SET_MODEL(ENT(pev), "models/zombie.mdl");
+		UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+		pev->solid = SOLID_SLIDEBOX;
+		pev->movetype = MOVETYPE_STEP;
+		m_bloodColor = BLOOD_COLOR_GREEN;
+		pev->health = gSkillData.zombieHealth;
+		pev->view_ofs = VEC_VIEW;// position of the eyes relative to monster's origin.
+		m_flFieldOfView = 0.5;// indicates the width of this monster's forward view cone ( as a dotproduct result )
+		m_MonsterState = MONSTERSTATE_NONE;
+		m_afCapability = bits_CAP_DOORS_GROUP;
 
-	pev->solid			= SOLID_SLIDEBOX;
-	pev->movetype		= MOVETYPE_STEP;
-	m_bloodColor		= BLOOD_COLOR_GREEN;
-	pev->health			= gSkillData.zombieHealth;
-	pev->view_ofs		= VEC_VIEW;// position of the eyes relative to monster's origin.
-	m_flFieldOfView		= 0.5;// indicates the width of this monster's forward view cone ( as a dotproduct result )
-	m_MonsterState		= MONSTERSTATE_NONE;
-	m_afCapability		= bits_CAP_DOORS_GROUP;
+		MonsterInit();
+	}
+	//else if(caseZ == 1) {
+	//	SET_MODEL(ENT(pev), "models/zombieBIG.mdl");
+	//	UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
 
-	MonsterInit();
+	//	pev->solid = SOLID_SLIDEBOX;
+	//	pev->movetype = MOVETYPE_STEP;
+	//	m_bloodColor = BLOOD_COLOR_GREEN;
+	//	pev->health = gSkillData.zombieHealth + 600;
+	//	pev->view_ofs = VEC_VIEW;// position of the eyes relative to monster's origin.
+	//	m_flFieldOfView = 0.5;// indicates the width of this monster's forward view cone ( as a dotproduct result )
+	//	m_MonsterState = MONSTERSTATE_NONE;
+	//	m_afCapability = bits_CAP_DOORS_GROUP;
+
+	//	MonsterInit();
+	//}
+	else {
+		SET_MODEL(ENT(pev), "models/zombieHD.mdl");
+		UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+
+		pev->solid = SOLID_SLIDEBOX;
+		pev->movetype = MOVETYPE_STEP;
+		m_bloodColor = BLOOD_COLOR_GREEN;
+		pev->health = gSkillData.zombieHealth + 550;
+		pev->view_ofs = VEC_VIEW;
+		m_flFieldOfView = 0.5;
+		m_MonsterState = MONSTERSTATE_NONE;
+		m_afCapability = bits_CAP_DOORS_GROUP;
+
+		MonsterInit();
+	}
+
 }
 
 //=========================================================
@@ -296,7 +352,8 @@ void CZombie :: Precache()
 	int i;
 
 	PRECACHE_MODEL("models/zombie.mdl");
-
+	PRECACHE_MODEL("models/zombieHD.mdl");
+	//PRECACHE_MODEL("models/zombieBIG.mdl");
 	for ( i = 0; i < ARRAYSIZE( pAttackHitSounds ); i++ )
 		PRECACHE_SOUND((char *)pAttackHitSounds[i]);
 

@@ -42,15 +42,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(Configuration)\$(ProjectName)\</OutDir>
+    <OutDir>D:\SteamLibrary\steamapps\common\Half-Life\valve\dlls\</OutDir>
     <IntDir>$(Configuration)\$(ProjectName)\int\</IntDir>
     <TargetName>hl</TargetName>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(Configuration)\$(ProjectName)\</OutDir>
+    <OutDir>D:\SteamLibrary\steamapps\common\Half-Life\valve\dlls\</OutDir>
     <IntDir>$(Configuration)\$(ProjectName)\int\</IntDir>
     <TargetName>hl</TargetName>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -99,8 +101,9 @@ EXIT /B 0</Command>
       <ModuleDefinitionFile>$(ProjectDir)..\..\dlls\hl.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>cd /D "$(ProjectDir)..\.."
+cmd /c copy-server.bat
+EXIT /B 0</Command>
     </PostBuildEvent>
     <PostBuildEvent />
   </ItemDefinitionGroup>

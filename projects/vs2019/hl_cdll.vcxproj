@@ -74,7 +74,7 @@
     <PostBuildEvent>
       <Command>cd /D "$(ProjectDir)..\.."
 cmd /c copy-client.bat
-EXIT /B 0</Command>
+EXIT /B 0&lt;different options&gt;</Command>
       <Message>Execute copy-client.bat</Message>
     </PostBuildEvent>
     <PostBuildEvent />
@@ -103,8 +103,9 @@ EXIT /B 0</Command>
       </BaseAddress>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>cd /D "$(ProjectDir)..\.."
+cmd /c copy-client.bat
+EXIT /B 0&lt;different options&gt;</Command>
     </PostBuildEvent>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -192,6 +193,7 @@ EXIT /B 0</Command>
     <ClCompile Include="..\..\pm_shared\pm_math.cpp" />
     <ClCompile Include="..\..\pm_shared\pm_shared.cpp" />
     <ClCompile Include="..\..\public\interface.cpp" />
+    <ClCompile Include="supershotgun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cl_dll\ammo.h" />
