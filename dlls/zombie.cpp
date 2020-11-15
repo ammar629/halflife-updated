@@ -294,7 +294,7 @@ void CZombie :: Spawn()
 {
 	Precache( );
 	int caseZ;
-	caseZ = RANDOM_LONG(0, 1) & 1 | RANDOM_LONG(0, 1) & 1;
+	caseZ = (RANDOM_LONG(0, 1) & 1) | (RANDOM_LONG(0, 1) & 1);
 	ALERT(at_console, "Probability Generator is %d\n", caseZ);
 
 	if (caseZ == 1) {
