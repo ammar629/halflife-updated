@@ -321,7 +321,9 @@ void CHud :: Init( void )
 
 	CVAR_CREATE( "hud_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO );		// controls whether or not to suicide immediately on TF class switch
 	CVAR_CREATE( "hud_takesshots", "0", FCVAR_ARCHIVE );		// controls whether or not to automatically take screenshots at the end of a round
-
+	CVAR_CREATE("hud_red", "0", FCVAR_ARCHIVE);
+	CVAR_CREATE("hud_green", "200", FCVAR_ARCHIVE);
+	CVAR_CREATE("hud_blue", "0", FCVAR_ARCHIVE);
 
 	m_iLogo = 0;
 	m_iFOV = 0;
