@@ -292,25 +292,155 @@ void CZombie :: HandleAnimEvent( MonsterEvent_t *pEvent )
 //=========================================================
 void CZombie :: Spawn()
 {
-	Precache( );
-	int caseZ;
-	caseZ = (RANDOM_LONG(0, 1) & 1) | (RANDOM_LONG(0, 1) & 1);
-	ALERT(at_console, "Probability Generator is %d\n", caseZ);
+	    Precache( );
+	    int model = RANDOM_LONG(0,10);
+		switch (model) {
+		default:
+		case 0:
+			SET_MODEL(ENT(pev), "models/zombie.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth;
+			pev->view_ofs = VEC_VIEW;// position of the eyes relative to monster's origin.
+			m_flFieldOfView = 0.5;// indicates the width of this monster's forward view cone ( as a dotproduct result )
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
 
-	if (caseZ == 1) {
-		SET_MODEL(ENT(pev), "models/zombie.mdl");
-		UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
-		pev->solid = SOLID_SLIDEBOX;
-		pev->movetype = MOVETYPE_STEP;
-		m_bloodColor = BLOOD_COLOR_GREEN;
-		pev->health = gSkillData.zombieHealth;
-		pev->view_ofs = VEC_VIEW;// position of the eyes relative to monster's origin.
-		m_flFieldOfView = 0.5;// indicates the width of this monster's forward view cone ( as a dotproduct result )
-		m_MonsterState = MONSTERSTATE_NONE;
-		m_afCapability = bits_CAP_DOORS_GROUP;
-
-		MonsterInit();
-	}
+			MonsterInit();
+			break;
+		case 1:
+			SET_MODEL(ENT(pev), "models/zombie_barnabus.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth + 20;
+			pev->view_ofs = VEC_VIEW;
+			m_flFieldOfView = 0.5;
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
+			MonsterInit();
+			break;
+		case 2:
+			SET_MODEL(ENT(pev), "models/zombie_barney.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth + 40;
+			pev->view_ofs = VEC_VIEW;
+			m_flFieldOfView = 0.5;
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
+			MonsterInit();
+			break;
+		case 3:
+			SET_MODEL(ENT(pev), "models/zombie_blkops.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth + 60;
+			pev->view_ofs = VEC_VIEW;
+			m_flFieldOfView = 0.5;
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
+			MonsterInit();
+			break;
+		case 4:
+			SET_MODEL(ENT(pev), "models/zombie_burnt.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth + 10;
+			pev->view_ofs = VEC_VIEW;
+			m_flFieldOfView = 0.5;
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
+			MonsterInit();
+			break;
+		case 5:
+			SET_MODEL(ENT(pev), "models/zombie_civilian.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth;
+			pev->view_ofs = VEC_VIEW;
+			m_flFieldOfView = 0.5;
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
+			MonsterInit();
+			break;
+		case 6:
+			SET_MODEL(ENT(pev), "models/zombie_construction.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth + 60;
+			pev->view_ofs = VEC_VIEW;
+			m_flFieldOfView = 0.5;
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
+			MonsterInit();
+			break;
+		case 7:
+			SET_MODEL(ENT(pev), "models/zombie_scientist.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth + 60;
+			pev->view_ofs = VEC_VIEW;
+			m_flFieldOfView = 0.5;
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
+			MonsterInit();
+			break;
+		case 8:
+			SET_MODEL(ENT(pev), "models/zombie_soldier.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth + 60;
+			pev->view_ofs = VEC_VIEW;
+			m_flFieldOfView = 0.5;
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
+			MonsterInit();
+			break;
+		case 9:
+			SET_MODEL(ENT(pev), "models/zombie_soldier.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth + 70;
+			pev->view_ofs = VEC_VIEW;
+			m_flFieldOfView = 0.5;
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
+			MonsterInit();
+			break;
+		case 10:
+			SET_MODEL(ENT(pev), "models/zombie_soldier_szarak.mdl");
+			UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+			pev->solid = SOLID_SLIDEBOX;
+			pev->movetype = MOVETYPE_STEP;
+			m_bloodColor = BLOOD_COLOR_GREEN;
+			pev->health = gSkillData.zombieHealth + 60;
+			pev->view_ofs = VEC_VIEW;
+			m_flFieldOfView = 0.5;
+			m_MonsterState = MONSTERSTATE_NONE;
+			m_afCapability = bits_CAP_DOORS_GROUP;
+			MonsterInit();
+			break;
+		}
 	//else if(caseZ == 1) {
 	//	SET_MODEL(ENT(pev), "models/zombieBIG.mdl");
 	//	UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
@@ -326,21 +456,6 @@ void CZombie :: Spawn()
 
 	//	MonsterInit();
 	//}
-	else {
-		SET_MODEL(ENT(pev), "models/zombieHD.mdl");
-		UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
-
-		pev->solid = SOLID_SLIDEBOX;
-		pev->movetype = MOVETYPE_STEP;
-		m_bloodColor = BLOOD_COLOR_GREEN;
-		pev->health = gSkillData.zombieHealth + 550;
-		pev->view_ofs = VEC_VIEW;
-		m_flFieldOfView = 0.5;
-		m_MonsterState = MONSTERSTATE_NONE;
-		m_afCapability = bits_CAP_DOORS_GROUP;
-
-		MonsterInit();
-	}
 
 }
 
@@ -352,7 +467,15 @@ void CZombie :: Precache()
 	int i;
 
 	PRECACHE_MODEL("models/zombie.mdl");
-	PRECACHE_MODEL("models/zombieHD.mdl");
+	PRECACHE_MODEL("models/zombie_barnabus.mdl");
+	PRECACHE_MODEL("models/zombie_barney.mdl");
+	PRECACHE_MODEL("models/zombie_blkops.mdl");
+	PRECACHE_MODEL("models/zombie_burnt.mdl");
+	PRECACHE_MODEL("models/zombie_civilian.mdl");
+	PRECACHE_MODEL("models/zombie_construction.mdl");
+	PRECACHE_MODEL("models/zombie_scientist.mdl");
+	PRECACHE_MODEL("models/zombie_soldier.mdl");
+	PRECACHE_MODEL("models/zombie_soldier_szarak.mdl");
 	//PRECACHE_MODEL("models/zombieBIG.mdl");
 	for ( i = 0; i < ARRAYSIZE( pAttackHitSounds ); i++ )
 		PRECACHE_SOUND((char *)pAttackHitSounds[i]);
