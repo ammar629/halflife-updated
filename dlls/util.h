@@ -159,6 +159,8 @@ inline BOOL FStringNull(int iString)			{ return iString == iStringNull; }
 #define		BLOOD_COLOR_RED		(BYTE)247
 #define		BLOOD_COLOR_YELLOW	(BYTE)195
 #define		BLOOD_COLOR_GREEN	BLOOD_COLOR_YELLOW
+#define     BLOOD_COLOR_BLUE    (BYTE)210
+#define     BLOOD_COLOR_PURPLE  (BYTE)300
 
 typedef enum 
 {

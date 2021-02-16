@@ -525,15 +525,35 @@ void CISlave :: StartTask ( Task_t *pTask )
 void CISlave :: Spawn()
 {
 	Precache( );
-
-	SET_MODEL(ENT(pev), "models/islave.mdl");
+	int model = RANDOM_LONG(0, 2);
+	switch (model) {
+	default:
+	case 0:
+		ALERT(at_aiconsole, "spawning islave");
+		SET_MODEL(ENT(pev), "models/islave.mdl");
+		pev->health = gSkillData.slaveHealth;
+		break;
+	case 1:
+		ALERT(at_aiconsole, "spawning islave_ns_s");
+		SET_MODEL(ENT(pev), "models/islave_ns_s.mdl");
+		pev->health = gSkillData.slaveHealth + 50;
+		m_bloodColor = BLOOD_COLOR_PURPLE;
+		break;
+	case 2:
+		ALERT(at_aiconsole, "spawning islave_ns_ns");
+		SET_MODEL(ENT(pev), "models/islave_ns_ns.mdl");
+		pev->health = gSkillData.slaveHealth + 80;
+		m_bloodColor = BLOOD_COLOR_BLUE;
+		break;
+	}
+	
 	UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
 
 	pev->solid			= SOLID_SLIDEBOX;
 	pev->movetype		= MOVETYPE_STEP;
-	m_bloodColor		= BLOOD_COLOR_GREEN;
+	
 	pev->effects		= 0;
-	pev->health			= gSkillData.slaveHealth;
+	
 	pev->view_ofs		= Vector ( 0, 0, 64 );// position of the eyes relative to monster's origin.
 	m_flFieldOfView		= VIEW_FIELD_WIDE; // NOTE: we need a wide field of view so npc will notice player and say hello
 	m_MonsterState		= MONSTERSTATE_NONE;
@@ -552,6 +572,8 @@ void CISlave :: Precache()
 	int i;
 
 	PRECACHE_MODEL("models/islave.mdl");
+	PRECACHE_MODEL("models/islave_ns_s.mdl");
+	PRECACHE_MODEL("models/islave_ns_ns.mdl");
 	PRECACHE_MODEL("sprites/lgtning.spr");
 	PRECACHE_SOUND("debris/zap1.wav");
 	PRECACHE_SOUND("debris/zap4.wav");
